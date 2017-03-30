@@ -10,6 +10,8 @@ public class Player : MonoBehaviour {
     public float deadZone = -5;
     new Rigidbody2D rigidbody;
     GM _GM;
+    public UnityEngine.UI.Text healthValue;
+    public UnityEngine.UI.Text pointsValue;
     
     // Use this for initialization
     void Start () {
