@@ -10,13 +10,14 @@ public class Player : MonoBehaviour {
     public float deadZone = -5;
     new Rigidbody2D rigidbody;
     GM _GM;
-    public UnityEngine.UI.Text healthValue;
-    public UnityEngine.UI.Text pointsValue;
-    
+    private Vector3 startingPosition;
+
+
     // Use this for initialization
     void Start () {
         rigidbody = GetComponent<Rigidbody2D>();
         _GM = FindObjectOfType<GM>();
+        startingPosition = transform.position;
 		
 	}
 	
@@ -36,7 +37,7 @@ public class Player : MonoBehaviour {
         //Check for out
         if(transform.position.y < deadZone)
         {
-            Debug.Log("You're Out");
+            GetOut();
         }
         
         
@@ -46,6 +47,8 @@ public class Player : MonoBehaviour {
 
     public void GetOut()
     {
-        _GM.SetLives(_GM.lives - 1);
+        _GM.SetLives(_GM.GetLives() - 1);
+        transform.position = startingPosition;
+        Debug.Log("You're Out");
     }
 }
