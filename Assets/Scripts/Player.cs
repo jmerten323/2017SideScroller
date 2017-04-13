@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public float speed = 5;
     public float jumpSpeed = 5;
     public float deadZone = -5;
+    public bool canFly = false;
     new Rigidbody2D rigidbody;
     GM _GM;
     private Vector3 startingPosition;
@@ -42,7 +43,7 @@ public class Player : MonoBehaviour {
         {
             anim.SetBool("Running", false);
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump")&& (v.y == 0 || canFly))
         {
             v.y = jumpSpeed;
         }
