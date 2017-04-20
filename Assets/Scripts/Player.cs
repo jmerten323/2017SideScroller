@@ -37,7 +37,7 @@ public class Player : MonoBehaviour {
         v.x = x * speed;
 
         //runnning animation
-        if(v.x != 0)
+        if (v.x != 0)
         {
             anim.SetBool("Running", true);
         }
@@ -45,18 +45,21 @@ public class Player : MonoBehaviour {
         {
             anim.SetBool("Running", false);
         }
-
         if (v.x > 0)
+        {
             sr.flipX = false;
+        }
         else if (v.x < 0)
+        {
             sr.flipX = true;
+        }
 
         if (Input.GetButtonDown("Jump")&& (v.y == 0 || canFly))
         {
             v.y = jumpSpeed;
         }
         //jumping animation
-        if (Air)
+        if (v.y != 0)
         {
             anim.SetBool("Air", true);
         }
