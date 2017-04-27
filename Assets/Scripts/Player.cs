@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public float jumpSpeed = 5;
     public float deadZone = -5;
     public bool canFly = false;
+    public Weapon currentWeapon;
     new Rigidbody2D rigidbody;
     GM _GM;
     private Vector3 startingPosition;
@@ -70,8 +71,14 @@ public class Player : MonoBehaviour {
 
         rigidbody.velocity = v;
 
+        //Attack with a weapon if you have one
+        if (Input.GetButtonDown("Fire1") && currentWeapon != null)
+        {
+            currentWeapon.Attack();
+        }
+
         //Check for out
-        if(transform.position.y < deadZone)
+        if (transform.position.y < deadZone)
         {
             GetOut();
         }
@@ -95,6 +102,12 @@ public class Player : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         Air = false;
+        var weapon = collision.gameObject.GetComponent<Weapon>();
+        if (weapon != null)
+        {
+            weapon.Getpickedup(this);
+            currentWeapon = weapon;
+        }
     }
     void OnCollisionExit2D(Collision2D collision)
     {
