@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     new Rigidbody2D rigidbody;
     GM _GM;
     private Vector3 startingPosition;
+    private GameObject coll;
 
     private Animator anim;
     public bool Air;
@@ -112,5 +113,13 @@ public class Player : MonoBehaviour {
     void OnCollisionExit2D(Collision2D collision)
     {
         Air = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.CompareTag("Coin"))
+        {
+            Destroy(coll.gameObject);
+        }
     }
 }
