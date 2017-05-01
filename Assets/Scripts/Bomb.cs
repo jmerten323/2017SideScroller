@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : Weapon {
+public class Bomb : Throwable {
 
     public float blastRadius = 4;
-    public bool isActive = false;
+    
 
     void Update()
     {
@@ -22,27 +22,7 @@ public class Bomb : Weapon {
         }
 
         }
-
-    public override void Attack()
-    {
-        transform.parent = null;
-        rigidbody2D.velocity = new Vector2(5, 0);
-        rigidbody2D.isKinematic = false;
-        collider.enabled = true;
-    }
-
-
-    public override void Getpickedup(Player player)
-    {
-        if (isActive)
-        {
-            return;
-        }
-        isActive = true;
-        base.Getpickedup(player);
-    }
-    
-        public void Explode()
+    public void Explode()
     {
         var enemies = FindObjectsOfType<Enemy>();
         foreach (var e in enemies)
