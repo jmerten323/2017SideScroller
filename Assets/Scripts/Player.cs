@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
             transform.parent = collision.transform;
         }
     }
-    void OnCollisionLeave2D(Collision2D collision)
+   void  OnCollisionLeave2D(Collision2D collision)
     {
         if (collision.transform.tag == "MovingPlatform")
         {
