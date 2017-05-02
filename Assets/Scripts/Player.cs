@@ -115,11 +115,18 @@ public class Player : MonoBehaviour {
         Air = true;
     }
 
-    void OnTriggerEnter2D(Collider2D coll)
+    void newOnCollisionEnter2D(Collision2D collision)
     {
-        if (coll.CompareTag("Coin"))
+        if (collision.transform.tag == "MovingPlatform")
         {
-            Destroy(coll.gameObject);
+            transform.parent = collision.transform;
+        }
+    }
+    void newOnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "MovingPlatform")
+        {
+            transform.parent = null;
         }
     }
 }
