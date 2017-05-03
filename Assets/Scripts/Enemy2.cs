@@ -10,19 +10,14 @@ public class Enemy2 : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (!enabled)
-        {
-             return;
-
-        }
+        
         var player = coll.gameObject.GetComponent<Player>();
         if (player != null)
         {
+           timeStarted = Time.time;
             player.speed = 2;
-            timeStarted = Time.time;
-
-        }
-
+           }
+        
         gameObject.SetActive(false); 
     }
 
