@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
-    public Camera camera;
+    public new Camera camera;
     Vector3 selfieStick;
     // Use this for initialization
     void Start()

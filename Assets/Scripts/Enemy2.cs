@@ -4,36 +4,40 @@ using UnityEngine;
 
 public class Enemy2 : MonoBehaviour
 {
-    float timeStarted = 0;
-    public float lastforSeconds = 5;
     Player player;
+    public float speed = 5;
 
+    void Start()
+    {
+        player.speed = 5;
+    }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-
+        if (!enabled)
+        {
+            return;
+        }
         var player = coll.gameObject.GetComponent<Player>();
         if (player != null)
         {
             player.speed = 2;
-            timeStarted = Time.time;
-
-
+            Invoke("ResetSpeed", 5.0f);
         }
 
 
     }
 
-    void Update()
+    void ResetSpeed()
     {
-        if (timeStarted != 0 && timeStarted + lastforSeconds < Time.time)
-        {
-            Debug.Log("speedingup");
-            timeStarted = 0;
-            player.speed = 5;
-
-
-        }
+        player.speed = 5;
     }
+   
+
 }
+    
+  
+
+    
+
 

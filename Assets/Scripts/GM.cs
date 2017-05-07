@@ -7,6 +7,7 @@ public class GM : MonoBehaviour {
     private int _Lives = 3;
     private int _Points;
     public GameObject gameOverSign;
+    public GameObject youWinSign;
 
     public Text healthValue;
     public Text pointsValue;
@@ -32,11 +33,16 @@ public class GM : MonoBehaviour {
     {
         _Points = newValue;
         pointsValue.text = _Points.ToString();
+        if (_Points > 100)
+        {
+            youWinSign.SetActive(true);
+        }
     }
 
     public int GetPoints()
     {
         return _Points;
+        
     }
     
 	}
