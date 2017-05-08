@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
     private Vector3 startingPosition;
     private GameObject coll;
 
+    private List<Weapon> weapons = new List<Weapon>();
+
     private Animator anim;
     public bool Air;
     private SpriteRenderer sr;
@@ -78,6 +80,11 @@ public class Player : MonoBehaviour {
         {
             currentWeapon.Attack();
         }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            int i = (weapons.IndexOf(currentWeapon) + 1) % weapons.Count;
+            SetCurrentWeapon(weapons[i]);
+        }
 
         //Check for out
         if (transform.position.y < deadZone)
@@ -101,6 +108,28 @@ public class Player : MonoBehaviour {
     {
         anim.SetTrigger("Powered");
     }
+
+    public void AddWeapon (Weapon w)
+    {
+        weapons.Add(w);
+        SetCurrentWeapon(w);
+    }
+
+    public void SetCurrentWeapon (Weapon w)
+    {
+        if (currentWeapon != null)
+        {
+            currentWeapon.gameObject.SetActive(false);
+        }
+        currentWeapon = w;
+
+        if (currentWeapon != null)
+        {
+            currentWeapon.gameObject.SetActive(true);
+        }
+    }
+
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         Air = false;
@@ -108,7 +137,7 @@ public class Player : MonoBehaviour {
         if (weapon != null)
         {
             weapon.Getpickedup(this);
-            currentWeapon = weapon;
+            
         }
     }
     void OnCollisionExit2D(Collision2D collision)
