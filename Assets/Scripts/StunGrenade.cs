@@ -21,6 +21,7 @@ public class StunGrenade : Throwable
     public void Explode()
     {
         var enemies = FindObjectsOfType<Enemy>();
+
         foreach (var e in enemies)
         {
             if (Vector3.Distance(this.transform.position, e.transform.position) < blastRadius)

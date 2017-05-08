@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     public float jumpSpeed = 5;
     public float deadZone = -5;
     public bool canFly = false;
+    public bool changeSpeed = false;
     public Weapon currentWeapon;
     new Rigidbody2D rigidbody;
     GM _GM;

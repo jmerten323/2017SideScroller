@@ -5,7 +5,10 @@ using UnityEngine;
 public class Enemy2 : MonoBehaviour
 {
     Player player;
+    public bool changeSpeed = false;
     public float speed = 5;
+    public float lastforSeconds = 10;
+    float timeStarted = 0;
 
     void Start()
     {
@@ -18,16 +21,29 @@ public class Enemy2 : MonoBehaviour
         {
             return;
         }
-        var player = coll.gameObject.GetComponent<Player>();
+        player = coll.gameObject.GetComponent<Player>();
         if (player != null)
         {
+            player.changeSpeed = true;
             player.speed = 2;
             Invoke("ResetSpeed", 5.0f);
+            timeStarted = Time.time;
+        }
+        else
+        {
+            return;
         }
 
-
     }
+    void Update()
+    {
+        if (speed != 0 && speed + lastforSeconds < Time.time)
+        {
+            timeStarted = 0;
+            player.changeSpeed = false;
 
+        }
+    }
     void ResetSpeed()
     {
         player.speed = 5;
