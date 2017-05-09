@@ -4,39 +4,37 @@ using UnityEngine;
 
 public class Bowser : MonoBehaviour
 {
-    public float speed;
-    public PlayerController player;
-    public GameObject impactEffect;
-    public float rotationSpeed;
-    public int damageToGive;
-    private Rigidbody2D myrigidbody2d;
+
+    public Transform player;
+    public float range = 50.0f;
+    public float bulletImpulse = 20.0f;
+    public GameObject playerObject;
+    
+
+    private bool onRange = false;
+
+    public Rigidbody projectile;
 
     void Start()
     {
-        player = FindObjectOfType<PlayerController>();
-        myrigidbody2d = GetComponent<Rigidbody2D>();
-
-        if(player.transform.position.x < transform.position.x)
-        {
-            speed = -speed;
-            rotationSpeed = -rotationSpeed;
-        }
+        float rand = Random.Range(1.0f, 2.0f);
+        InvokeRepeating("Shoot", 2, rand);
+      
     }
 
-    void Update()
+    void Shoot()
     {
-        myrigidbody2d.velocity = new Vector2(speed, myrigidbody2d.velocity.y);
-        myrigidbody2d.angularVelocity = rotationSpeed;
-    }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.name == "Player")
+        if (onRange)
         {
-            HealthManager.HurtPlayer(damageToGive);
+
+            Rigidbody bullet = (Rigidbody)Instantiate(projectile, transform.position + transform.forward, transform.rotation);
+            bullet.AddForce(transform.forward * bulletImpulse, ForceMode.Impulse);
+
+            Destroy(bullet.gameObject, 2);
         }
-        Instantiate(impactEffect, transform.position, transform.rotation);
-        Destroy(gameObject);
+
+
     }
 }
 
