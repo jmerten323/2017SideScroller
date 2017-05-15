@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     public int health = 100;
     public float speed = 5;
     public float jumpSpeed = 5;
     public float deadZone = -5;
+    public float pipeZone = -4.5f;
     public bool canFly = false;
     public bool changeSpeed = false;
     public Weapon currentWeapon;
@@ -24,18 +26,20 @@ public class Player : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         rigidbody = GetComponent<Rigidbody2D>();
         _GM = FindObjectOfType<GM>();
         startingPosition = transform.position;
         anim = GetComponent<Animator>();
         Air = true;
         sr = GetComponent<SpriteRenderer>();
-		
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         //Apply Movement
         float x = Input.GetAxisRaw("Horizontal");
         Vector2 v = rigidbody.velocity;
@@ -59,7 +63,7 @@ public class Player : MonoBehaviour {
             sr.flipX = true;
         }
 
-        if (Input.GetButtonDown("Jump")&& (v.y == 0 || canFly))
+        if (Input.GetButtonDown("Jump") && (v.y == 0 || canFly))
         {
             v.y = jumpSpeed;
         }
@@ -86,16 +90,22 @@ public class Player : MonoBehaviour {
             SetCurrentWeapon(weapons[i]);
         }
 
+
         //Check for out
         if (transform.position.y < deadZone)
         {
             GetOut();
         }
-        
-        
+
+        if (transform.position.y < pipeZone)
+        {
+            transform.position = new Vector3(-4.953446f,3.010493f, 0);
+        }
+
+
         //rigidbody.AddForce(new Vector2(x * speed, 0));
-		
-	}
+
+    }
 
     public void GetOut()
     {
@@ -109,13 +119,13 @@ public class Player : MonoBehaviour {
         anim.SetTrigger("Powered");
     }
 
-    public void AddWeapon (Weapon w)
+    public void AddWeapon(Weapon w)
     {
         weapons.Add(w);
         SetCurrentWeapon(w);
     }
 
-    public void SetCurrentWeapon (Weapon w)
+    public void SetCurrentWeapon(Weapon w)
     {
         if (currentWeapon != null)
         {
@@ -137,7 +147,7 @@ public class Player : MonoBehaviour {
         if (weapon != null)
         {
             weapon.Getpickedup(this);
-            
+
         }
     }
     void OnCollisionExit2D(Collision2D collision)
@@ -156,7 +166,12 @@ public class Player : MonoBehaviour {
             transform.parent = collision.transform;
         }
     }
+     
+   
+}
+
+    
+
 
     
   
-}
